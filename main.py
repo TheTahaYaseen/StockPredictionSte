@@ -1,3 +1,15 @@
+import subprocess
+
+# Install packages listed in packages.toml
+def install_packages_from_toml():
+    try:
+        subprocess.run(['pip', 'install', '-r', 'packages.toml'])
+        print("Packages installed successfully.")
+    except Exception as e:
+        print("Error installing packages:", e)
+
+install_packages_from_toml()
+
 from datetime import date, timedelta
 
 import sys
