@@ -1,5 +1,15 @@
 from datetime import date, timedelta
 
+import sys
+import subprocess
+
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'yfinance'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'prophet'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'plotly'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'requests'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'bs4'])
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pandas'])
+
 import streamlit as st
 import yfinance as yf
 from prophet import Prophet
