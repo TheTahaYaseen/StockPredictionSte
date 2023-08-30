@@ -1,14 +1,16 @@
 import subprocess
+import os
+
+# Determine the path to the packages.toml file
+toml_path = os.path.join(os.path.dirname(__file__), 'packages.toml')
 
 # Install packages listed in packages.toml
 def install_packages_from_toml():
     try:
-        subprocess.run(['pip', 'install', '-r', 'packages.toml'])
+        subprocess.run(['pip', 'install', '-r', toml_path])
         print("Packages installed successfully.")
     except Exception as e:
-        print("Error installing packages:", e)
-
-install_packages_from_toml()
+        print("Error installing packages:", e)install_packages_from_toml()
 
 from datetime import date, timedelta
 
