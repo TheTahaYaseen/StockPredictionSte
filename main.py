@@ -10,7 +10,8 @@ def install_packages_from_toml():
         subprocess.run(['pip', 'install', '-r', toml_path])
         print("Packages installed successfully.")
     except Exception as e:
-        print("Error installing packages:", e)install_packages_from_toml()
+        print("Error installing packages:", e)
+install_packages_from_toml()
 
 from datetime import date, timedelta
 
