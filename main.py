@@ -34,13 +34,13 @@ def load_data(ticker):
 data_loaded = True
 try:
     data = load_data(selected_stock)
+    stock_price_of_today = str(data.iloc[-1]["Close"])
 
 except Exception:
     st.write("Please Write A Valid Stock Symbol!")
     data_loaded = False
 
 if data_loaded:
-    stock_price_of_today = str(data.iloc[-1]["Close"])
 
     data = data[["Date", "Close"]]
     data = data.rename(columns={"Date":"ds", "Close":"y"})
