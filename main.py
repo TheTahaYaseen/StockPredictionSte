@@ -13,7 +13,7 @@ date_of_today = date_temp.strftime("%Y-%m-%d")
 start_date = date_temp - timedelta(days=50)
 start_date = start_date.strftime("%Y-%m-%d")
 
-date_of_year_later = date_temp + timedelta(days=365)
+date_of_year_later = date_temp + timedelta(days=180)
 date_of_year_later = date_of_year_later.strftime("%Y-%m-%d")
 
 date_of_month_later = date_temp + timedelta(days=30)
@@ -51,7 +51,7 @@ if data_loaded:
     m = Prophet(daily_seasonality=True, weekly_seasonality=True, yearly_seasonality=True)
     m.fit(data)
 
-    future = m.make_future_dataframe(periods=366)
+    future = m.make_future_dataframe(periods=180)
     forecast = m.predict(future)
 
     forecast['ds'] = pd.to_datetime(forecast['ds'])
@@ -72,7 +72,7 @@ if data_loaded:
 
     stock_price_of_day_later = filtered_row['yhat'].values[0]
 
-    st.write(f"Stock Forecast Till The Next Year: {stock_price_of_year_later}")
+    st.write(f"Stock Forecast Till The Next 6 Months: {stock_price_of_year_later}")
     st.write(f"Stock Forecast Till The Next Month: {stock_price_of_month_later}")
     st.write(f"Stock Forecast Till The Next Week: {stock_price_of_week_later}")
     st.write(f"Stock Forecast Till The Next Day: {stock_price_of_day_later}")
