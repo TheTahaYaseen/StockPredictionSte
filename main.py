@@ -10,7 +10,7 @@ import pandas as pd
 date_temp = date.today()
 date_of_today = date_temp.strftime("%Y-%m-%d")
 
-start_date = date_temp - timedelta(days=300)
+start_date = date_temp - timedelta(days=50)
 start_date = start_date.strftime("%Y-%m-%d")
 
 date_of_year_later = date_temp + timedelta(days=365)
