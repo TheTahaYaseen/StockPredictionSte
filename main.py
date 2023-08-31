@@ -10,14 +10,11 @@ import pandas as pd
 date_temp = date.today()
 date_of_today = date_temp.strftime("%Y-%m-%d")
 
-start_date = date_temp - timedelta(days=50)
+start_date = date_temp - timedelta(days=300)
 start_date = start_date.strftime("%Y-%m-%d")
 
-date_of_year_later = date_temp + timedelta(days=180)
-date_of_year_later = date_of_year_later.strftime("%Y-%m-%d")
-
-date_of_month_later = date_temp + timedelta(days=30)
-date_of_month_later = date_of_month_later.strftime("%Y-%m-%d")
+date_of_3_months_later = date_temp + timedelta(days=89)
+date_of_3_months_later = date_of_3_months_later.strftime("%Y-%m-%d")
 
 date_of_week_later = date_temp + timedelta(days=7)
 date_of_week_later = date_of_week_later.strftime("%Y-%m-%d")
@@ -34,9 +31,9 @@ def load_data(ticker):
     data.reset_index(inplace=True)
     return data
 
+data_loaded = True
 try:
     data = load_data(selected_stock)
-    data_loaded = True
 
 except Exception:
     st.write("Please Write A Valid Stock Symbol!")
@@ -48,21 +45,17 @@ if data_loaded:
     data = data[["Date", "Close"]]
     data = data.rename(columns={"Date":"ds", "Close":"y"})
 
-    m = Prophet(daily_seasonality=True, weekly_seasonality=True, yearly_seasonality=True)
+    m = Prophet()
     m.fit(data)
 
-    future = m.make_future_dataframe(periods=180)
+    future = m.make_future_dataframe(periods=90)
     forecast = m.predict(future)
 
     forecast['ds'] = pd.to_datetime(forecast['ds'])
 
-    filtered_row = forecast[forecast['ds'] == date_of_year_later]
+    filtered_row = forecast[forecast['ds'] == date_of_3_months_later]
 
-    stock_price_of_year_later = filtered_row['yhat'].values[0]
-
-    filtered_row = forecast[forecast['ds'] == date_of_month_later]
-
-    stock_price_of_month_later = filtered_row['yhat'].values[0]
+    stock_price_of_3_months_later = filtered_row['yhat'].values[0]
 
     filtered_row = forecast[forecast['ds'] == date_of_week_later]
 
@@ -72,8 +65,7 @@ if data_loaded:
 
     stock_price_of_day_later = filtered_row['yhat'].values[0]
 
-    st.write(f"Stock Forecast Till The Next 6 Months: {stock_price_of_year_later}")
-    st.write(f"Stock Forecast Till The Next Month: {stock_price_of_month_later}")
+    st.write(f"Stock Forecast Till The Next 3 Months: {stock_price_of_3_months_later}")
     st.write(f"Stock Forecast Till The Next Week: {stock_price_of_week_later}")
     st.write(f"Stock Forecast Till The Next Day: {stock_price_of_day_later}")
     st.write(f"Stock Forecast Today: {stock_price_of_today}")
