@@ -35,7 +35,6 @@ data_loaded = True
 try:
     data = load_data(selected_stock)
     stock_price_of_today = str(data.iloc[-1]["Close"])
-
 except Exception:
     st.write("Please Write A Valid Stock Symbol!")
     data_loaded = False
