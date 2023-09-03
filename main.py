@@ -31,23 +31,16 @@ def load_data(ticker):
     data.reset_index(inplace=True)
     return data
 
-data_loaded = True
 try:
     data = load_data(selected_stock)
     stock_price_of_today = str(data.iloc[-1]["Close"])
-except Exception:
-    st.write("Please Write A Valid Stock Symbol!")
-    data_loaded = False
-
-if data_loaded:
-
     data = data[["Date", "Close"]]
     data = data.rename(columns={"Date":"ds", "Close":"y"})
 
     m = Prophet(daily_seasonality=True, weekly_seasonality=True, yearly_seasonality=True)
     m.fit(data)
 
-    future = m.make_future_dataframe(periods=31)
+    future = m.make_future_dataframe(periods=33)
     forecast = m.predict(future)
 
     forecast['ds'] = pd.to_datetime(forecast['ds'])
@@ -71,3 +64,6 @@ if data_loaded:
 
     fig1 = plot_plotly(m, forecast)
     st.plotly_chart(fig1)
+    
+except Exception as error:
+    st.write(f"Please Write A Valid Stock Symbol! {error}")
