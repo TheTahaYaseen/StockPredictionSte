@@ -37,7 +37,7 @@ try:
     data = data[["Date", "Close"]]
     data = data.rename(columns={"Date":"ds", "Close":"y"})
 
-    m = Prophet()
+    m = Prophet(daily_seasonality=True)
     m.fit(data)
 
     future = m.make_future_dataframe(periods=33)
